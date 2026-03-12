@@ -1,0 +1,8 @@
+.DS_Store
+.direnv/
+.env
+.env.local
+.mise.local.toml
+.python-version
+.tool-versions
+node_modules/

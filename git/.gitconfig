@@ -1,0 +1,35 @@
+[user]
+	name = Bastien S.
+	email = siniak.bastien@gmail.com
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[fetch]
+	prune = true
+
+[rebase]
+	autoStash = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default
+
+[color]
+	ui = auto
+
+[core]
+	excludesfile = ~/.gitignore_global
+
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch
+	ci = commit
+	last = log -1 HEAD --stat
+	lg = log --graph --date=short --pretty=format:%C(auto)%h%d %s %C(black)%C(bold)%cr %C(blue)<%an>

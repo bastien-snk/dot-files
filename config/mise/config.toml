@@ -1,0 +1,11 @@
+[settings]
+# Keep runtime versions project-local by default instead of auto-installing
+# from global shell usage.
+not_found_auto_install = false
+
+# Avoid noisy shell status messages; project configs remain the source of truth.
+status = { missing_tools = "if_other_versions_installed", show_env = false, show_tools = false }
+
+[tools]
+bun = "latest"
+java = ["21", "corretto-8.482.08.1"]

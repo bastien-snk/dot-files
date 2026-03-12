@@ -1,0 +1,32 @@
+# Base Ghostty config. Keep machine-specific changes in local.conf.
+
+theme = dark:Dotfiles-Dark,light:Dotfiles-Light
+
+# JetBrains Mono is bundled by Ghostty on macOS and supports ligatures.
+font-family = JetBrains Mono
+font-feature = calt
+font-size = 15
+
+window-padding-x = 14
+window-padding-y = 12,14
+window-padding-balance = true
+window-padding-color = background
+
+background-opacity = 0.60
+background-opacity-cells = false
+background-blur = macos-glass-regular
+
+cursor-style = block
+cursor-style-blink = false
+mouse-hide-while-typing = true
+
+window-save-state = always
+window-inherit-working-directory = true
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+window-new-tab-position = current
+
+macos-titlebar-style = transparent
+macos-window-buttons = visible
+
+config-file = ?local.conf

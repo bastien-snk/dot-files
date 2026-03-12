@@ -1,0 +1,7 @@
+# Copy to local.conf for machine-specific overrides you don't want committed.
+#
+# Example:
+# theme = dark:iTerm2 Default,light:PaperColor Light
+# font-family = Fira Code
+# font-size = 14
+# background-opacity = 1

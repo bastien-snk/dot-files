@@ -1,0 +1,3 @@
+[global]
+# Keep prompt output quiet when entering project directories.
+hide_env_diff = true

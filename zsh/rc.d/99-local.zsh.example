@@ -1,0 +1,6 @@
+# Copy this file to 99-local.zsh for machine-specific shell overrides.
+#
+# Examples:
+# export PATH="$HOME/.local/bin:$PATH"
+# export EDITOR="nvim"
+# alias gs='git status'

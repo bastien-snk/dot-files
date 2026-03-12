@@ -64,6 +64,14 @@ The `hmc` shell function runs HeadlessMC from:
 
 and automatically writes the Java runtime paths HeadlessMC needs, so older Minecraft versions like `1.8.9` can use Java 8 without creating `HeadlessMC/` folders in random working directories.
 
+`just setup-minecraft` also installs the HeadlessMC runtime needed for old Minecraft on Apple Silicon:
+
+```sh
+~/.local/share/headlessmc/runtime/headlessmc.jdk
+```
+
+That runtime is used for old Minecraft versions that still depend on x86_64 LWJGL natives.
+
 That links this repo's managed files to:
 
 - `$XDG_CONFIG_HOME/ghostty`

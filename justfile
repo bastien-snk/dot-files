@@ -5,6 +5,8 @@ xdg_config_dir := env_var_or_default("XDG_CONFIG_HOME", env_var("HOME") + "/.con
 brewfile := repo_root + "/Brewfile"
 headlessmc_repo := "headlesshq/headlessmc"
 headlessmc_version_file := repo_root + "/tools/headlessmc-version"
+headlessmc_runtime_version := "8.482.08.1"
+headlessmc_runtime_url := "https://corretto.aws/downloads/resources/" + headlessmc_runtime_version + "/amazon-corretto-" + headlessmc_runtime_version + "-macosx-x64.tar.gz"
 ghostty_target := xdg_config_dir + "/ghostty"
 ghostty_source := repo_root + "/config/ghostty"
 starship_target := xdg_config_dir + "/starship.toml"
@@ -47,7 +49,7 @@ install-runtimes:
   set -eu
   mise install
 
-setup-minecraft: headlessmc
+setup-minecraft: headlessmc headlessmc-runtime
 
 brew-tools:
   #!/usr/bin/env zsh
@@ -74,6 +76,59 @@ headlessmc:
   curl -fsSL "https://github.com/{{headlessmc_repo}}/releases/download/${version}/${asset}" -o "$target"
   chmod +x "$target"
   printf 'Installed HeadlessMC %s to %s\n' "$version" "$target"
+
+headlessmc-runtime:
+  #!/usr/bin/env zsh
+  set -eu
+  runtime_root="${HOME}/.local/share/headlessmc/runtime"
+  version="{{headlessmc_runtime_version}}"
+  archive_url="{{headlessmc_runtime_url}}"
+  versioned_dir="${runtime_root}/amazon-corretto-${version}.jdk"
+  linked_dir="${runtime_root}/headlessmc.jdk"
+  compat_linked_dir="${runtime_root}/minecraft-compat-java8.jdk"
+  java8_linked_dir="${runtime_root}/headlessmc-java8.jdk"
+  old_linked_dir="${runtime_root}/amazon-corretto-8.jdk"
+  java_bin="${versioned_dir}/Contents/Home/bin/java"
+  mkdir -p "$runtime_root"
+  if [ ! -x "$java_bin" ]; then
+    tmp_dir="$(mktemp -d)"
+    archive_path="${tmp_dir}/amazon-corretto-${version}-macosx-x64.tar.gz"
+    curl -fsSL "$archive_url" -o "$archive_path"
+    tar -xzf "$archive_path" -C "$tmp_dir"
+    rm -rf "$versioned_dir"
+    mv "${tmp_dir}/amazon-corretto-8.jdk" "$versioned_dir"
+    rm -rf "$tmp_dir"
+  fi
+  if [ -L "$old_linked_dir" ]; then
+    rm "$old_linked_dir"
+  elif [ -d "$old_linked_dir" ]; then
+    backup="${old_linked_dir}.backup-$(date +%Y%m%d%H%M%S)"
+    mv "$old_linked_dir" "$backup"
+    printf 'Moved existing HeadlessMC Java 8 directory to %s\n' "$backup"
+  fi
+  if [ -L "$compat_linked_dir" ]; then
+    rm "$compat_linked_dir"
+  elif [ -d "$compat_linked_dir" ]; then
+    backup="${compat_linked_dir}.backup-$(date +%Y%m%d%H%M%S)"
+    mv "$compat_linked_dir" "$backup"
+    printf 'Moved existing HeadlessMC runtime directory to %s\n' "$backup"
+  fi
+  if [ -L "$java8_linked_dir" ]; then
+    rm "$java8_linked_dir"
+  elif [ -d "$java8_linked_dir" ]; then
+    backup="${java8_linked_dir}.backup-$(date +%Y%m%d%H%M%S)"
+    mv "$java8_linked_dir" "$backup"
+    printf 'Moved existing HeadlessMC runtime directory to %s\n' "$backup"
+  fi
+  if [ -L "$linked_dir" ]; then
+    rm "$linked_dir"
+  elif [ -d "$linked_dir" ]; then
+    backup="${linked_dir}.backup-$(date +%Y%m%d%H%M%S)"
+    mv "$linked_dir" "$backup"
+    printf 'Moved existing HeadlessMC runtime directory to %s\n' "$backup"
+  fi
+  ln -s "$versioned_dir" "$linked_dir"
+  printf 'Installed HeadlessMC runtime %s to %s\n' "$version" "$java_bin"
 
 check-tools:
   #!/usr/bin/env zsh

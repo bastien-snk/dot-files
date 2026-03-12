@@ -3,9 +3,11 @@ hmc() {
   local hmc_dir="${hmc_root}/HeadlessMC"
   local config_file="${hmc_dir}/config.properties"
   local java_root="$HOME/.local/share/mise/installs/java"
+  local headlessmc_java="$hmc_root/runtime/headlessmc.jdk/Contents/Home/bin/java"
   local -a java_versions=()
   local java_prop tmp_file
 
+  [[ -x "${headlessmc_java}" ]] && java_versions+=("${headlessmc_java}")
   [[ -x "${java_root}/21/bin/java" ]] && java_versions+=("${java_root}/21/bin/java")
   [[ -x "${java_root}/corretto-8/bin/java" ]] && java_versions+=("${java_root}/corretto-8/bin/java")
 

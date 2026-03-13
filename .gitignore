@@ -2,3 +2,4 @@ config/ghostty/local.conf
 zsh/rc.d/99-local.zsh
 ssh/config.local
 HeadlessMC/
+gradle/gradle.properties

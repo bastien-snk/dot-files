@@ -1,0 +1,5 @@
+# Copy to gradle/gradle.properties and fill in your local credentials.
+#
+# GitHub Packages / GPR credentials
+gpr.user=your-github-username
+gpr.key=your-github-personal-access-token

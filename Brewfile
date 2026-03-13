@@ -3,6 +3,7 @@ tap "anomalyco/tap"
 brew "starship"
 brew "mise"
 brew "direnv"
+brew "gh"
 brew "anomalyco/tap/opencode"
 
 cask "ghostty"

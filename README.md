@@ -32,6 +32,7 @@ just install-runtimes
 - HeadlessMC install version in `tools/headlessmc-version`
 - Git config at `git/.gitconfig`
 - Global gitignore at `git/.gitignore_global`
+- Gradle template at `gradle/gradle.properties.example`
 - SSH config at `ssh/config`
 - Zsh bootstrap at `zsh/.zshrc`
 - Modular Zsh config snippets in `zsh/rc.d/`
@@ -85,6 +86,7 @@ That links this repo's managed files to:
 - `~/.gitconfig`
 - `~/.gitignore_global`
 - `~/.ssh/config`
+- `~/.gradle/gradle.properties`
 - `~/.zshrc`
 - `~/.hushlogin`
 - or `~/.config/ghostty` when `XDG_CONFIG_HOME` is unset
@@ -241,6 +243,28 @@ Connect with:
 
 ```sh
 ssh seaven-prod
+```
+
+## Gradle
+
+For local Gradle credentials like GitHub Packages / GPR, the repo manages the file shape but not the secret values.
+
+Create your local file from:
+
+```sh
+cp gradle/gradle.properties.example gradle/gradle.properties
+```
+
+Then fill in your real values in:
+
+```sh
+gradle/gradle.properties
+```
+
+That file is intentionally untracked and `just install` will link it to:
+
+```sh
+~/.gradle/gradle.properties
 ```
 
 ## Customize Zsh

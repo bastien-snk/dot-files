@@ -1,6 +1,6 @@
 # Base Ghostty config. Keep machine-specific changes in local.conf.
 
-theme = dark:Dotfiles-Dark,light:Dotfiles-Light
+theme = Dotfiles-Dark
 
 # JetBrains Mono is bundled by Ghostty on macOS and supports ligatures.
 font-family = JetBrains Mono

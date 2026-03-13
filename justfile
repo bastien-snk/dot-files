@@ -30,6 +30,8 @@ gitignore_global_target := env_var("HOME") + "/.gitignore_global"
 gitignore_global_source := repo_root + "/git/.gitignore_global"
 ssh_config_target := env_var("HOME") + "/.ssh/config"
 ssh_config_source := repo_root + "/ssh/config"
+gradle_target := env_var("HOME") + "/.gradle/gradle.properties"
+gradle_source := repo_root + "/gradle/gradle.properties"
 zsh_target := env_var("HOME") + "/.zshrc"
 zsh_source := repo_root + "/zsh/.zshrc"
 hushlogin_target := env_var("HOME") + "/.hushlogin"
@@ -40,7 +42,7 @@ default:
 
 bootstrap: brew-tools install install-runtimes
 
-install: ghostty starship mise direnv opencode codex-config claude-config git ssh zsh hushlogin
+install: ghostty starship mise direnv opencode codex-config claude-config git ssh gradle zsh hushlogin
 
 install-tools: brew-tools
 
@@ -327,6 +329,28 @@ ssh:
   fi
   ln -s "{{ssh_config_source}}" "{{ssh_config_target}}"
   printf 'Linked %s -> %s\n' "{{ssh_config_target}}" "{{ssh_config_source}}"
+
+gradle:
+  #!/usr/bin/env zsh
+  set -eu
+  if [ ! -f "{{gradle_source}}" ]; then
+    printf 'Gradle properties not linked: create %s from %s first.\n' "{{gradle_source}}" "{{repo_root}}/gradle/gradle.properties.example"
+    exit 0
+  fi
+  mkdir -p "${HOME}/.gradle"
+  if [ -L "{{gradle_target}}" ] && [ "$(readlink "{{gradle_target}}")" = "{{gradle_source}}" ]; then
+    printf 'Gradle properties already linked: %s -> %s\n' "{{gradle_target}}" "{{gradle_source}}"
+    exit 0
+  fi
+  if [ -e "{{gradle_target}}" ] && [ ! -L "{{gradle_target}}" ]; then
+    backup="{{gradle_target}}.backup-$(date +%Y%m%d%H%M%S)"
+    mv "{{gradle_target}}" "$backup"
+    printf 'Moved existing Gradle properties to %s\n' "$backup"
+  elif [ -L "{{gradle_target}}" ]; then
+    rm "{{gradle_target}}"
+  fi
+  ln -s "{{gradle_source}}" "{{gradle_target}}"
+  printf 'Linked %s -> %s\n' "{{gradle_target}}" "{{gradle_source}}"
 
 zsh:
   #!/usr/bin/env zsh

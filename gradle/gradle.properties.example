@@ -1,3 +1,8 @@
+org.gradle.daemon=true
+org.gradle.daemon.idletimeout=900000
+org.gradle.jvmargs=-Xmx1g
+org.gradle.parallel=true
+
 # Copy to gradle/gradle.properties and fill in your local credentials.
 #
 # GitHub Packages / GPR credentials

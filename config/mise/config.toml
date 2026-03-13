@@ -9,3 +9,4 @@ status = { missing_tools = "if_other_versions_installed", show_env = false, show
 [tools]
 bun = "latest"
 java = ["21", "corretto-8.482.08.1"]
+maven = "latest"
